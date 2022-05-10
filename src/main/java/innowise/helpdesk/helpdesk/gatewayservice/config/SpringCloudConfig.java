@@ -16,6 +16,9 @@ public class SpringCloudConfig {
                 .route("historys_route",
                         route -> route.path("/api/historys/**")
                                 .uri("lb://history-service"))
+                .route("keycloak_route",
+                        route->route.path("/api/keycloak/**")
+                                .uri("lb://helpdesk-security-keycloak"))
 
                 .build();
     }
