@@ -1,10 +1,50 @@
-server:
-  port: 8080
-
-eureka:
-    instance:
-      hostname: localhost
-
 spring:
   application:
     name: helpdesk-gateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: helpdesk-history-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/product/**
+        - id: helpdesk-history-my-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/**
+
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://localhost:8484/auth/realms/Helpdesk-app
+            token-uri: http://localhost:8484/auth/realms/Helpdesk-app/protocol/openid-connect/token
+            authorization-uri: http://localhost:8484/auth/realms/Helpdesk-app/protocol/openid-connect/auth
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            client-id: helpdesk-gateway-client
+            client-secret: JfP7Ct7l8AMhusLhLkxnQBnuMDINjcqs
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+eureka:
+  instance:
+    client:
+      serviceUrl:
+        defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+    prefer-ip-address: true
