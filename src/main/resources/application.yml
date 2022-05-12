@@ -20,15 +20,16 @@ spring:
       client:
         provider:
           my-keycloak-provider:
-            issuer-uri: http://localhost:8484/auth/realms/Helpdesk-app
-            token-uri: http://localhost:8484/auth/realms/Helpdesk-app/protocol/openid-connect/token
-            authorization-uri: http://localhost:8484/auth/realms/Helpdesk-app/protocol/openid-connect/auth
+            issuer-uri: http://localhost:8484/auth/realms/Helpdesk-gateway-app
+            token-uri: http://localhost:8484/auth/realms/Helpdesk-gateway-app/protocol/openid-connect/token
+            authorization-uri: http://localhost:8484/auth/realms/Helpdesk-gateway-app/protocol/openid-connect/auth
+            user-info-uri: http://localhost:8484/auth/realms/Helpdesk-gateway-app/protocol/openid-connect/userinfo
+
         registration:
           keycloak-spring-gateway-client:
             provider: my-keycloak-provider
             client-id: helpdesk-gateway-client
-            client-secret: JfP7Ct7l8AMhusLhLkxnQBnuMDINjcqs
-            authorization-grant-type: authorization_code
+            client-secret: kQLLSS6xBgUTgwPgSGrWAVrWJtp7czGg
             redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
 
 server:
