@@ -3,3 +3,9 @@ spring:
     name: gateway-service
   config:
     import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      name: gateway-service
+      discovery:
+        enabled: true
+        service-id: config-server
